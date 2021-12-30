@@ -11,7 +11,7 @@
 
 ## 1.2 주 목적
 
-웹에서
+<!-- 웹에서 -->
 
 # 2. 작품 요약
 
@@ -76,9 +76,7 @@ HTML, CSS, JS
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88625c84-7ac6-4eb2-b13c-877b240e24fc/folium.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88625c84-7ac6-4eb2-b13c-877b240e24fc/folium.png) -->
 
-# 5. 제작결과
-
-## 5.2 웹페이지
+# 5. 웹페이지 제작결과
 
 <!--
 [제주 관광지도.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/900781df-227a-448e-ad0b-c1c09d94ac22/_.zip) -->

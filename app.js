@@ -1,5 +1,23 @@
 const http = require("http");
 const fs = require("fs");
+const url = require("url");
+const qs = require("querystring");
+
+// post 요청 처리
+const postData = JSON.stringify({
+    msg: "Hello World!",
+});
+
+const options = {
+    hostname: "localhost",
+    port: 8080,
+    path: "/save",
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(postData),
+    },
+};
 
 const app = http.createServer(function (req, res) {
     let url = req.url;
@@ -9,7 +27,70 @@ const app = http.createServer(function (req, res) {
         res.writeHead(200);
         res.end(fs.readFileSync(__dirname + url));
     } else if (url == "/save") {
-        console.log(req.body);
+        // post 요청 처리
+        let body = "";
+        req.setEncoding("utf-8");
+        req.on("data", function (data) {
+            body += data; // post 방식으로 받은 데이터들이 query string 형식의 문자열 형태로 출력이 된다.
+            dataObj = qs.parse(body); // 문자열을 JSON Obj형식으로 변환
+        });
+        // callback 지옥은 아닐지.. -> 수정 필요..
+        req.on("end", function () {
+            var textInfo = dataObj.textInfo;
+            var fileName = dataObj.fileName;
+            console.log(textInfo);
+            // 요청받은 데이터를 이용하여 파일생성
+
+            fs.readdir("./", (err, data) => {
+                // 에러 처리는 어떻게 해야할까?
+                console.log(err);
+                if (!data.includes("saves")) {
+                    fs.mkdir("./saves", (err) => {
+                        console.log(err);
+                        fs.writeFile(
+                            __dirname + `/saves/${fileName}.txt`,
+                            textInfo,
+                            function (err) {
+                                if (err) {
+                                    console.log(
+                                        "file write fail... : " + err.message
+                                    );
+                                    res.end("file write fail.....");
+                                } else {
+                                    // 파일작성이 에러없이 완료됬을 경우에는
+                                    res.writeHead(301, { Location: "/" }); // 상태코드 301을 응답하여 redirection
+                                    res.end();
+                                }
+                            }
+                        );
+                    });
+                } else {
+                    console.log("saves가 있습니다.");
+                    fs.writeFile(
+                        __dirname + `/saves/${fileName}.txt`,
+                        textInfo,
+                        function (err) {
+                            if (err) {
+                                console.log(
+                                    "file write fail... : " + err.message
+                                );
+                                res.end("file write fail.....");
+                            } else {
+                                // 파일작성이 에러없이 완료됬을 경우에는
+                                res.writeHead(301, { Location: "/" }); // 상태코드 301을 응답하여 redirection
+                                res.end();
+                            }
+                        }
+                    );
+                }
+            });
+        });
+
+        console.log(req);
+        // const { textInfo } = req.body;
+        // console.log(textInfo);
+        res.writeHead(200);
+        // res.end("request success!");
     } else {
         res.writeHead(404);
         res.end("NotFound");
@@ -34,3 +115,14 @@ app.listen(8080);
 
 // 클립보드 기능
 //https://www.delftstack.com/ko/howto/javascript/javascript-copy-to-clipboard/
+
+// drag & drop
+// https://dev-gorany.tistory.com/254
+
+// get, post 요청에 대한 서버 처리 without express
+//  - https://gongbu-ing.tistory.com/10
+
+// request.on?
+// - https://0oooceanhigh.medium.com/request-on-f060659cb36e
+
+// callback 지옥 수정해보기
