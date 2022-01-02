@@ -1,22 +1,23 @@
 {
-    "name": "web-notepad",
-    "version": "1.0.0",
-    "description": "노드 스터디 과제1. 웹에서 동작하는 메모장 만들기",
-    "main": "app.js",
+    "name": "web-notepad2",
+    "version": "0.0.0",
+    "private": true,
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon app.js"
+        "start": "nodemon ./bin/www"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/leewooseong/Web-Notepad.git"
+    "dependencies": {
+        "aws-sdk": "^2.1048.0",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "dotenv": "^10.0.0",
+        "ejs": "~2.6.1",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "mongoose": "^6.1.4",
+        "morgan": "~1.9.1",
+        "multer": "^1.4.4",
+        "multer-s3": "^2.10.0"
     },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/leewooseong/Web-Notepad/issues"
-    },
-    "homepage": "https://github.com/leewooseong/Web-Notepad#readme",
     "devDependencies": {
         "nodemon": "^2.0.15"
     }

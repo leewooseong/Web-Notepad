@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' src='/stylesheets/style.css' />
+    <style>
+        html,
+        body {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1 {
+            margin: 20px;
+            height: 50px;
+        }
+
+        .form-area {
+            width: 100%;
+            height: 100%;
+            /* background-color: bisque; */
+            margin-top: -90px;
+            padding: 20px;
+            padding-top: 70px;
+
+            box-sizing: border-box;
+        }
+
+        .form-area .form_submit {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-area .form_input {
+            border: 1px solid gray;
+            width: 100%;
+            /* background-color: gray; */
+            padding: 0;
+            height: 80%;
+        }
+
+        .modal-background {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            position: fixed;
+            z-index: 10;
+        }
+
+        .modal-container {
+            width: 500px;
+            height: 800px;
+            background-color: white;
+            border: 5px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            overflow: scroll;
+        }
+
+        ul {
+            padding: 20px;
+        }
+
+        li {
+            /* border: 2px solid black; */
+            background-color: lightgray;
+            list-style: none;
+
+        }
+
+        .show-content {}
+
+        .hide-content .memo-content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Web-Notepad</h1>
+    <!-- <form action="/save" method="post" accept-charset="utf-8" class="form-area"> -->
+    <input type="text" name="title" id="" placeholder="제목을 입력해주세요.">
+    <button class="button_submit"> 저장하기 </button>
+    <button class="button_get"> 저장된 목록 </button>
+    <!-- <input type="text" class="form_input" /> -->
+    <textarea name="content" id="" class="form_input" placeholder="내용을 입력해주세요."></textarea>
+
+    <div class="modal-background">
+        <div class="modal-container">
+            <h1>저장된 메모</h1>
+            <ul class="memo-list">
+                <!-- 메모장 내용이 여기 표시됩니다. -->
+            </ul>
+
+            <button class="btn1">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        const title = document.querySelector('input');
+        const content = document.querySelector('textarea');
+        const postButton = document.querySelector('.button_submit');
+        const getButton = document.querySelector('.button_get');
+        let 모달 = false;
+        const ul = document.querySelector('.memo-list');
+        const frag = document.createDocumentFragment();
+
+
+        // post 요청: 적힌 메모장 제목과 내용을 서버로 전송
+        postButton.addEventListener('click', () => {
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/save');
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.send(JSON.stringify({ title: title.value, content: content.value }));
+        })
+
+        // get 요청: 서버로부터 DB에 있는 내용을 받아와서 보여줌
+        getButton.addEventListener('click', () => {
+
+            // get 요청 생성 및 요청
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/save');
+            xhr.send();
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    // 이전 데이터 모두 삭제: 받아온 데이터를 화면에 표시만 해주면 기존의 데이터와 중복처리 되기 때문, removeChild로 하는 것이 비용이 더 좋을 지 for문으로 변경된 사항이 있는 것을 찾아서 변경사항만 삭제하는 것이 더 좋을 지 여쭤보기
+                    // 1. 기존 데이터 모두 삭제
+                    while (ul.firstChild) {
+                        ul.removeChild(ul.firstChild);
+                    }
+                    // 2. 변경된 데이터만 반영: 미개발
+
+                    // 받아온 데이터를 화면에 표시하기: js 최적화
+                    result = JSON.parse(xhr.response);      // 왜인지는 모르겠는데 json이 string으로 변환되어서 이를 해결하기 위한 코드
+
+                    result.data.forEach((value) => {
+                        const list = document.createElement('li');
+                        list.className = 'hide-content';
+                        list.addEventListener('click', () => {
+                            if (list.className == 'hide-content') {
+                                list.className = 'show-content';
+                            } else if (list.className == 'show-content') {
+                                list.className = 'hide-content'
+                            }
+                        })
+                        list.innerHTML = `
+                        <p class="memo-title">${value.title}</p>
+                        <p class="memo-content">${value.content}</p>
+                        `;
+                        frag.appendChild(list);
+                    })
+                    ul.appendChild(frag);
+                    //모달창 열기
+                    if (모달 == false) {
+                        document.querySelector('.modal-background').style.display = 'flex';
+                        모달 = true;
+                    }
+                }
+            };
+        })
+
+        // 모달창 닫기
+        document.querySelector('.btn1').addEventListener('click', function () {
+            if (모달 == true) {
+                document.querySelector('.modal-background').style.display = 'none';
+                모달 = false;
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>
+
+
+<!-- 
+    api 방식으로 사용하고 싶은데.. 어떻게 작성하는 게 좋을까? 
+    xhr을 사용해서 데이터를 받아올 수는 있는 이 데이터를 어떻게 화면에 잘 반영할 수 있을까에 대한 고민들
+    화면 깜빡임을 감수하고 새롭게 작성해주는 것이 맞을까
+    삭제 기능을 넣는다면..
+
+    서버에서 받아온 정보가 string으로 저장되는 이유?
+
+
+-->

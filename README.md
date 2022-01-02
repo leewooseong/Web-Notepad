@@ -21,7 +21,7 @@
 
 ## 2.2 기대효과
 
-웹에서 간편하게 메모장 수행을 진행할 수 있어 띄워져있는 탭을 통해 간편하게 메모장을 관리할 수 있다?
+웹에서 간편하게 메모장 수행을 진행할 수 있어 띄워져있는 탭을 통해 간편하게 메모장을 사용할 수 있따.
 
 # 3. 작품 제작 과정
 
@@ -31,20 +31,9 @@
 
 메모장 기능 정리: 약 1일 이내 소요
 
-웹페이지 구축: 약 1일 소요
+웹페이지 제작: 약 2일 소요
 
 작품 설명서 작성: 약 1일 이내
-
-<!--
-아이디어 구상 및 데이터 확보: 약 하루 정도 소요
-
-전처리: 약 3일 정도 소요
-
-시각화: 약 2일 정도 소요
-
-웹페이지 제작: 약 2일 정도 소요
-
-작품 설명서 작성: 약 2일 정도 소요 -->
 
 ### 3.1.2 역할분담
 
@@ -52,38 +41,68 @@
 
 ## 3.2 메모장 기능 정리
 
+1. 텍스트의 내용을 입력 후 저장하기 버튼을 통해서 서버에 내용을 저장할 수 있다.
+2. 저장된 목록을 통해서 서버에 저장된 메모들의 목록을 확인할 수 있다.
+
 ## 3.3 웹페이지 제작
-
-## 3.4 웹페이지 구축
-
-<!-- ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fdd8564e-d5e9-4932-ba13-448b2c09ff64/_2020-10-31__3.40.48.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fdd8564e-d5e9-4932-ba13-448b2c09ff64/_2020-10-31__3.40.48.png)
-
-위 자료를 보면 충분히 훌륭한 관광지들이 제주도 전역에 고르게 분포한 것을 알 수 있는데,  본 프로젝트로 매년 제주를 찾는 많은 관광객들을 어느정도 고르게 분산시켜 인파 몰림을 방지하고 제주 각 지역의 관광, 경제 사업 등을 균등하게 발전시킬 수 있는 효과를 얻을 수 있다.
-
-위 자료를 보면 충분히 훌륭한 관광지들이 제주도 전역에 고르게 분포한 것을 알 수 있는데,  매년 제주를 찾는 많은 관광객들을 어느정도 고르게 분산시켜 인파 몰림을 방지하고 제주 각 지역의 관광, 경제 사업 등을 균등하게 발전시킬 수 있는 효과를 가질 수 있다. -->
 
 # 4 언어 및 라이브러리
 
 HTML, CSS, JS
 
-<!-- ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1892ae05-150d-43b8-9b93-ee3a4ee17fe6/download.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1892ae05-150d-43b8-9b93-ee3a4ee17fe6/download.jpg)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/79ff43f8-610e-4527-aa1d-509965466c55/HTML5_Logo_512.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/79ff43f8-610e-4527-aa1d-509965466c55/HTML5_Logo_512.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a494b7b5-c221-446c-8c85-994b663b9da3/CSS3_logo_and_wordmark.svg.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a494b7b5-c221-446c-8c85-994b663b9da3/CSS3_logo_and_wordmark.svg.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ec816ed-4ee7-4a98-8b32-a73f84b2cbc5/javascript-logo-E967E87D74-seeklogo.com.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ec816ed-4ee7-4a98-8b32-a73f84b2cbc5/javascript-logo-E967E87D74-seeklogo.com.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88625c84-7ac6-4eb2-b13c-877b240e24fc/folium.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/88625c84-7ac6-4eb2-b13c-877b240e24fc/folium.png) -->
-
 # 5. 웹페이지 제작결과
-
-<!--
-[제주 관광지도.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/900781df-227a-448e-ad0b-c1c09d94ac22/_.zip) -->
 
 # 6. 개발 중 이슈
 
+1.  mongoDB에 데이터베이스 이름 작성 방법
+
+    > 문제
+
+    mongoDB에 데이터를 저장하는 로직에서 save() 함수부터 다음 코드가 동작되지 않는 문제 (status가 전달되지 않음)<br>
+
+    > 해결방법
+
+    MongoDB에서 DB의 이름을 적어줄 때 시작문자를 대문자로 지정 해서 생기는 문제로 파악하고 이를 수정해줌으로 문제를 해결
+
+2.  MongoDB가 업데이트 되지 않아던 이유
+
+    > 문제:
+
+    -   postman으로는 success를 받았지만 save() 동작 이후 DB에 데이터가 반영이 안되는 문제
+
+    > 해결방법:
+
+    -   DB에 반영되는 시간이 필요했던 것으로 나중에 확인하니 제대로 반영되어 있는 것을 확인(DB관련 프로그램을 로컬로 다운받아서 사용해 볼 것)
+
 # 7. 피드백
 
-<!-- 1. 다크투어리즘
-2. 지도만 만드는 것이 큰 홍보가 될까? SNS 활용 방안, 자동 게시물 올리기 -->
+-   fetch를 사용하지 않는 이유??
+
+-   json 파일로 민감한 정보를 관리하는 것보다는 .env를 통해서 민간함 정보를 관리한느 것이 더 유용하다.
+
+    -   express에서는 dotenv라는 패키지를 설치: os마다 다른 환경변수 설정 방식을 통일할 수 있고 많은 양의 환경 변수를 관리하기 용의
+
+-   날짜는 Date로 관리해야한다.
+
+    -   특정한 날짜 표기 방식은 날짜 표기가 다른 나라나 기관에서 사용하기 힘들기 때문
+
+-   MongoDB는 아틸라스? 로컬?
+
+    -   속도측면 및 비용의 측면에서 차이가 난다.
+    -   아틸라스: 트래픽 + 요청에 따라 비용이 발생한다.
+    -   로컬: 비용이 없고 속도가 빠르기 때문에 로컬을 설치하는 것을 추천한다!
+
+-   쿼리문 학습하기
+    -   MongoDB를 통해 구현하는 것도 좋지만 큰 서비스에서는 커버하기 힘든 경우가 있고 데이터를 직접 넣어주어야하는 경우가 있기 때문에 쿼리문도 학습해놓자.
+
+<!--
+해야될 것들
+0. 일단 기능부터 완성하기 [o]
+1. dbConfig로 쓰이는 것들 .env로 바꾸기
+2. 지금 사용에 안필요한 코드 분류해보기 > 관식님, 한별님 코드 참고, 한별님 피드백과, 관식님, 기영님 피드백 필기적은 것 확인해서 반영해보기
+3. 한별님의 스키마 작성방식 보고 배우기!, trim, maxlangth
+4. 한별님 코드 피드백? fetch를 사용하지 않는 이유?? > 경로가 다 보이기때문?? 이게 어떤 식으로 문제가 될 수 있는지 여쭤보기
+5. MongoDB Mongoose 찾아보고 로컬로 설치해서 연결하기
+6. 몽고디비 스키마는 어떻게 리드미에 적는 지 알아보기
+7. 올려주신 readme들 보면서 어떻게 작성하면 좋을 지 생각해보기!: 설명에 필요한 주요 코드 작성하기,
+ -->
