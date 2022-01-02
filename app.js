@@ -1,12 +1,12 @@
-var createError = require("http-errors");
-var express = require("express");
+var express = require("express"); // application에 express 가져오기
 var path = require("path");
+var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 
-var app = express();
+var app = express(); // 이렇게 생성자 함수를 통해 app을 만든다.
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

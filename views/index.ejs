@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        <%= title %>
+        Web-Notepad
     </title>
     <link rel='stylesheet' src='/stylesheets/style.css' />
     <style>
@@ -21,28 +21,18 @@
             height: 50px;
         }
 
-        .form-area {
-            width: 100%;
-            height: 100%;
-            /* background-color: bisque; */
-            margin-top: -90px;
+        .memo-container {
+            display: flex;
+            flex-direction: column;
             padding: 20px;
-            padding-top: 70px;
-
-            box-sizing: border-box;
         }
 
-        .form-area .form_submit {
+
+        .form_input {
+            border: 1px solid gray;
             margin-top: 20px;
             margin-bottom: 20px;
-        }
-
-        .form-area .form_input {
-            border: 1px solid gray;
-            width: 100%;
-            /* background-color: gray; */
-            padding: 0;
-            height: 80%;
+            height: 700px;
         }
 
         .modal-background {
@@ -74,28 +64,49 @@
         }
 
         li {
-            /* border: 2px solid black; */
-            background-color: lightgray;
+            border: 1px solid rgb(192, 192, 192);
+            padding: 5px;
+            margin-bottom: 10px;
+            /* background-color: lightgray; */
+            background-color: ghostwhite;
             list-style: none;
+
 
         }
 
-        .show-content {}
-
         .hide-content .memo-content {
             display: none;
+        }
+
+        .memo-title {
+            margin: 0;
+            background-color: rgb(219, 219, 224);
+        }
+
+        .memo-content {
+            margin: 0;
+            background-color: rgb(219, 219, 224);
+
+            /* background-color: ghostwhite; */
+        }
+
+        .button_close {
+            margin-left: 20px;
         }
     </style>
 </head>
 
 <body>
     <h1>Web-Notepad</h1>
-    <!-- <form action="/save" method="post" accept-charset="utf-8" class="form-area"> -->
-    <input type="text" name="title" id="" placeholder="제목을 입력해주세요.">
-    <button class="button_submit"> 저장하기 </button>
-    <button class="button_get"> 저장된 목록 </button>
-    <!-- <input type="text" class="form_input" /> -->
-    <textarea name="content" id="" class="form_input" placeholder="내용을 입력해주세요."></textarea>
+    <section class="memo-container">
+        <div>
+            <input type="text" name="title" id="" placeholder="제목을 입력해주세요.">
+            <button class="button_submit"> 저장하기 </button>
+        </div>
+
+        <textarea name="content" id="" class="form_input" placeholder="내용을 입력해주세요."></textarea>
+        <button class="button_get"> 저장된 목록 </button>
+    </section>
 
     <div class="modal-background">
         <div class="modal-container">
@@ -104,7 +115,7 @@
                 <!-- 메모장 내용이 여기 표시됩니다. -->
             </ul>
 
-            <button class="btn1">닫기</button>
+            <button class="button_close">닫기</button>
         </div>
     </div>
 
@@ -113,7 +124,7 @@
         const content = document.querySelector('textarea');
         const postButton = document.querySelector('.button_submit');
         const getButton = document.querySelector('.button_get');
-        let 모달 = false;
+        let modalOpen = false;
         const ul = document.querySelector('.memo-list');
         const frag = document.createDocumentFragment();
 
@@ -121,10 +132,15 @@
         // post 요청: 적힌 메모장 제목과 내용을 서버로 전송
         postButton.addEventListener('click', () => {
 
+            // post 요청 생성 및 요청
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '/save');
             xhr.setRequestHeader('content-type', 'application/json');
             xhr.send(JSON.stringify({ title: title.value, content: content.value }));
+
+            // input의 value 초기화
+            title.value = "";
+            content.value = "";
         })
 
         // get 요청: 서버로부터 DB에 있는 내용을 받아와서 보여줌
@@ -164,20 +180,21 @@
                         frag.appendChild(list);
                     })
                     ul.appendChild(frag);
+
                     //모달창 열기
-                    if (모달 == false) {
+                    if (modalOpen == false) {
                         document.querySelector('.modal-background').style.display = 'flex';
-                        모달 = true;
+                        modalOpen = true;
                     }
                 }
             };
         })
 
         // 모달창 닫기
-        document.querySelector('.btn1').addEventListener('click', function () {
-            if (모달 == true) {
+        document.querySelector('.button_close').addEventListener('click', function () {
+            if (modalOpen == true) {
                 document.querySelector('.modal-background').style.display = 'none';
-                모달 = false;
+                modalOpen = false;
             }
         });
 
